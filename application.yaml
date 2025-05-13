@@ -9,8 +9,8 @@ spec:
   source:
     repoURL: https://github.com/LauraOkafor/argocd-app-config.git
     targetRevision: HEAD
-    path: dev  # Folder in your repo containing YAMLs
-
+    path: dev  
+    
   destination:
     server: https://kubernetes.default.svc  # This means deploy to the current cluster
     namespace: myapp
