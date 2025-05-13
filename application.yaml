@@ -1,23 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp-argo-application
-  namespace: argocd
+  name: my-app-application
+  namespace: argocd   # Must be the same namespace where ArgoCD is installed
 spec:
   project: default
 
   source:
-    repoURL: https://gitlab.com/nanuchi/argocd-app-config.git
+    repoURL: https://github.com/LauraOkafor/argocd-app-config.git
     targetRevision: HEAD
-    path: dev
-  destination: 
-    server: https://kubernetes.default.svc
+    path: dev  # Folder in your repo containing YAMLs
+
+  destination:
+    server: https://kubernetes.default.svc  # This means deploy to the current cluster
     namespace: myapp
 
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
 
-    automated:
-      selfHeal: true
-      prune: true
+    automated:      # Automatically sync changes from Git
+      prune: true   # Remove resources no longer defined in Git
+      selfHeal: true  # Revert any out-of-sync changes in the cluster
